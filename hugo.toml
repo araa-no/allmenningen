@@ -1,0 +1,37 @@
+baseURL = 'https://araa.no/'
+locale = 'nb-NO'
+title = 'Allmenningen'
+copyright = "© 2026 Allmenningen / CC-BY-SA-4.0"
+
+# SEO Settings
+[params]
+  description = "Allmenningen - Uavhengig nyheter og analyse"
+  default_og_image = "/images/og-default.jpg"  # Create this image (1200x630px recommended)
+  facebook = "allmenningen"  # Your Facebook handle (without @)
+  twitter = "allmenningen"  # Your Twitter handle (without @)
+  linkedin = "https://www.linkedin.com/company/allmenningen" # Your Linkedin profile URL
+  mastodon = "https://mastodon.social/@allmenningen"  # Your Mastodon profile URL
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false # enable images with description and accreditation
+
+[permalinks]
+  [permalinks.page]
+    articles = "/artikler/:year/:month/:slug/"
+  [permalinks.section]
+    articles = "/artikler"
+  [permalinks.taxonomy]
+    topics = "/emner/"
+    authors = "/forfattere/"
+    category = "/kategorier/"
+  [permalinks.term]
+    topics = "/emne/:slug/"
+    authors = "/forfatter/:slug/"
+    category = "/kategori/:slug/"
+
+[taxonomies]
+  author = 'authors'
+  topic = 'topics'
+  category = 'category'

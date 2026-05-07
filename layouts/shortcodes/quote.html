@@ -1,0 +1,22 @@
+{{/* Quote Block Shortcode
+Usage: {{< quote author="Author Name" icon="optional-svg" >}}Quote text here{{< /quote >}}
+*/}}
+<section class="mt-4 relative left-1/2 -translate-x-1/2 w-screen bg-ink-600 py-12">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    {{ with .Get "icon" }}
+    <div class="mb-4 flex justify-center">{{ . | safeHTML }}</div>
+    {{ else }}
+    <svg class="mb-4 mx-auto" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="22" stroke="#C45B4A" stroke-width="1.5"/>
+      <circle cx="24" cy="24" r="10" stroke="#6B8F71" stroke-width="1.5"/>
+      <circle cx="24" cy="24" r="3" fill="#C45B4A"/>
+    </svg>
+    {{ end }}
+    <blockquote class="font-display text-2xl sm:text-3xl text-cream-100 max-w-2xl mx-auto leading-snug mb-3">
+      "{{ .Inner | strings.TrimSpace }}"
+    </blockquote>
+    {{ with .Get "author" }}
+    <cite class="text-cream-400 text-sm not-italic">— {{ . }}</cite>
+    {{ end }}
+  </div>
+</section>

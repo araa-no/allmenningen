@@ -1,0 +1,36 @@
+{{ define "main" }}
+<!-- Breadcrumb -->
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+  <nav aria-label="breadcrumb" class="flex items-center gap-2 text-xs text-ink-300">
+    {{ range .Ancestors.Reverse }}
+    <a href="{{ .RelPermalink }}" class="hover:text-rust-400 transition-colors">{{ .LinkTitle }}</a>
+    <span>/</span>
+    {{ end }}
+    <a aria-current="page" href="{{ .RelPermalink }}" class="text-ink-400">{{ .LinkTitle }}</a>
+  </nav>
+</div>
+
+<!-- Page Header -->
+<header class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+  {{ with .Params.subtitle }}
+  <span class="text-xs font-semibold uppercase tracking-widest text-grove-500 mb-3 block">{{ . }}</span>
+  {{ end }}
+  <h1 class="font-display text-4xl sm:text-5xl leading-tight text-ink-600">{{ .Title }}</h1>
+  {{ with .Params.description }}
+  <p class="font-text text-xl text-ink-400 leading-relaxed mt-4">{{ . }}</p>
+  {{ end }}
+</header>
+
+<!-- Main Content (with shortcodes) -->
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 text-ink-500 text-base sm:text-[17px] leading-relaxed">
+  {{ .Content }}
+</div>
+
+<!-- Last Updated -->
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 text-ink-300 text-xs space-y-0.5">
+  <p>Publisert <span class="text-ink-400">{{ .Date | time.Format ":date_medium" }}</span></p>
+  {{if .Lastmod}}
+    <p>Sist endra <span class="text-ink-400">{{ .Lastmod | time.Format ":date_medium" }}</span></p>
+  {{ end }}
+</div>
+{{ end }}

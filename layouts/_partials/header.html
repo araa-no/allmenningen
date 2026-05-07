@@ -1,0 +1,48 @@
+<nav class="sticky top-0 z-50 bg-cream-50 backdrop-blur-sm border-b">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-14">
+
+      <!-- Left nav -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="" class="nav-link text-sm font-medium text-ink-400 transition-colors duration-150">Politikk</a>
+        <a href="" class="nav-link text-sm font-medium text-ink-400 transition-colors duration-150">Økonomi</a>
+        <a href="" class="nav-link text-sm font-medium text-ink-400 transition-colors duration-150">Kultur</a>
+        <a href="" class="nav-link text-sm font-medium text-ink-400 transition-colors duration-150">Lokal</a>
+      </div>
+
+      <!-- Logo center -->
+      <a href="/" class="font-display text-2xl text-ink-600 tracking-tight">Allmenningen</a>
+
+      <!-- Right nav -->
+      <div class="flex items-center gap-4">
+        <button id="mobile-menu-btn" class="md:hidden text-ink-500" aria-label="Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <div class="items-center ">
+          <a href="#subscribe" class="group inline-flex items-center gap-2 px-6 py-2 rounded-full bg-grove-50 text-grove-600 font-medium text-sm tracking-wide border-[1.5px] border-grove-200 ring-1 ring-grove-400/30 ring-offset-2 ring-offset-cream-100 hover:ring-2 hover:ring-grove-300/50 hover:ring-offset-3 hover:bg-grove-100 hover:border-grove-300 hover:-translate-y-px active:scale-95 transition-all duration-300">
+          Abonner
+        </a>
+
+        </div>
+
+        <a href="#search" class="text-ink-400 hover:text-ink-600 transition-colors duration-150" aria-label="Search">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-cream-400 py-3 space-y-2">
+      <a href="" class="block font-medium py-1.5 text-ink-400 hover:text-rust-400">Politikk</a>
+      <a href="" class="block font-medium py-1.5 text-ink-400 hover:text-rust-400">Økonomi</a>
+      <a href="" class="block font-medium py-1.5 text-ink-400 hover:text-rust-400">Kultur</a>
+      <a href="" class="block font-medium py-1.5 text-ink-400 hover:text-rust-400">Lokal</a>
+    </div>
+  </div>
+</nav>
+<script>
+  document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+</script>

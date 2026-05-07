@@ -1,0 +1,34 @@
+{{/* Statistics Block Shortcode
+Usage:
+{{< stats title="Title" background="cream" border="true" >}}
+2019 | Grunnlagt | rust
+12 | Faste skribenter | grove
+{{< /stats >}}
+Background options: white, cream
+Color options: rust, grove, bay, ink
+*/}}
+{{ $bg := .Get "background" | default "white" }}
+<section class="mt-4 relative left-1/2 -translate-x-1/2 w-screen {{ if eq $bg "cream" }}bg-cream-200/60{{ else }}bg-white{{ end }} {{ if .Get "border" }}border-y border-cream-400{{ end }}">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    {{ with .Get "title" }}
+    <h2 class="font-display text-2xl mb-6 text-center text-ink-600">{{ . }}</h2>
+    {{ end }}
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+      {{ $lines := split .Inner "\n" }}
+      {{ range $lines }}
+        {{ if and . (gt (len .) 0) }}
+          {{ $parts := split . "|" }}
+          {{ if gt (len $parts) 2 }}
+            {{ $value := trim (index $parts 0) " " }}
+            {{ $label := trim (index $parts 1) " " }}
+            {{ $color := trim (index $parts 2) " " }}
+            <div>
+              <div class="font-display text-3xl sm:text-4xl text-{{ if eq $color "rust" }}rust{{ else if eq $color "grove" }}grove{{ else if eq $color "bay" }}bay{{ else }}ink{{ end }}-500">{{ $value }}</div>
+              <div class="text-sm text-ink-400 mt-1">{{ $label }}</div>
+            </div>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+{{/* Highlight Block Shortcode
+Usage: {{< highlight background="cream" border="true" title="Optional Title" >}}Content here{{< /highlight >}}
+Background options: cream, grove, rust, bay
+*/}}
+{{ $bg := .Get "background" | default "cream" }}
+{{ $border := .Get "border" }}
+<section class="mt-4 relative left-1/2 -translate-x-1/2 w-screen {{ if eq $bg "cream" }}bg-cream-200/60{{ else if eq $bg "grove" }}bg-grove-50{{ else if eq $bg "rust" }}bg-rust-50{{ else if eq $bg "bay" }}bg-bay-50{{ else }}bg-cream-200/60{{ end }} {{ if $border }}border-y border-cream-400{{ end }}">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    {{ with .Get "title" }}
+    <h2 class="font-display text-2xl mb-4 text-ink-600">{{ . }}</h2>
+    {{ end }}
+    <div class="text-ink-500 leading-relaxed">
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
+</section>

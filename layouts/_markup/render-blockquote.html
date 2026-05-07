@@ -1,0 +1,10 @@
+<figure>
+  <blockquote {{ with .Attributes.cite }}cite="{{ . }}"{{ end }} class="font-text text-xl text-ink-400 italic">
+    {{ .Text }}
+  </blockquote>
+  {{ with .Attributes.caption }}
+    <figcaption class="blockquote-caption">
+      {{ . | safeHTML }}
+    </figcaption>
+  {{ end }}
+</figure>

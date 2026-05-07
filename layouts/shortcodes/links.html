@@ -1,0 +1,41 @@
+{{/* Links Block Shortcode
+Usage:
+{{< links title="Optional Title" columns="2" >}}
+- [Title](url) | Description | <svg>icon</svg>
+- [Another](url) | Description
+{{< /links >}}
+Columns: 2 or 3
+*/}}
+<section class="mt-4 relative left-1/2 -translate-x-1/2 w-screen max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  {{ with .Get "title" }}
+  <h2 class="font-display text-2xl mb-5 text-ink-600">{{ . }}</h2>
+  {{ end }}
+  <div class="grid {{ if eq (.Get "columns") "3" }}sm:grid-cols-2 lg:grid-cols-3{{ else }}sm:grid-cols-2{{ end }} gap-4">
+    {{ $items := split .Inner "\n" }}
+    {{ range $items }}
+      {{ if and . (gt (len .) 0) }}
+        {{ $parts := split . "|" }}
+        {{ if gt (len $parts) 0 }}
+          {{ $linkPart := index $parts 0 }}
+          {{ $linkParts := split $linkPart "]" }}
+          {{ if gt (len $linkParts) 1 }}
+            {{ $title := trim (replace (index $linkParts 0) "[" "") " " }}
+            {{ $urlWithParen := index $linkParts 1 }}
+            {{ $url := trim (replace (replace $urlWithParen "(" "") ")" "") " " }}
+            <a href="{{ $url }}" class="group block p-4 rounded-lg border border-cream-400 bg-white hover:border-grove-300 hover:shadow-sm transition-all">
+              {{ if gt (len $parts) 2 }}
+              <div class="w-10 h-10 rounded-full bg-cream-100 flex items-center justify-center mb-3">
+                {{ index $parts 2 | safeHTML }}
+              </div>
+              {{ end }}
+              <h3 class="font-display text-base text-ink-600 group-hover:text-rust-400 transition-colors mb-1">{{ $title }}</h3>
+              {{ if gt (len $parts) 1 }}
+              <p class="text-sm text-ink-300 leading-relaxed">{{ trim (index $parts 1) " " }}</p>
+              {{ end }}
+            </a>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+</section>

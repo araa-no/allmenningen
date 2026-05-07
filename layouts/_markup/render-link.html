@@ -1,0 +1,8 @@
+{{- $u := urls.Parse .Destination -}}
+<a href="{{ .Destination | safeURL }}"
+  class="text-rust-400 hover:text-rust-500 underline underline-offset-2 transition-colors"
+  {{- with .Title }} title="{{ . }}"{{ end -}}
+  {{- if $u.IsAbs }} rel="external"{{ end -}}
+>
+  {{- with .Text }}{{ . }}{{ end -}}
+</a>

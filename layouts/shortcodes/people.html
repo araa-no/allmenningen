@@ -1,0 +1,39 @@
+{{/* People/Team Block Shortcode
+Usage:
+{{< people title="Team Title" background="cream" border="true" >}}
+Name | Role | Bio
+Name2 | Role2 | Bio2
+{{< /people >}}
+Background options: white, cream, ink
+*/}}
+{{ $bg := .Get "background" | default "white" }}
+<section class="mt-4 relative left-1/2 -translate-x-1/2 w-screen {{ if eq $bg "cream" }}bg-cream-200/60{{ else if eq $bg "ink" }}bg-ink-600 text-cream-100{{ else }}bg-white{{ end }} {{ if .Get "border" }}border-y border-cream-400{{ end }}">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    {{ with .Get "title" }}
+    <h2 class="font-display text-2xl mb-6 {{ if eq $bg "ink" }}text-cream-100{{ else }}text-ink-600{{ end }}">{{ . }}</h2>
+    {{ end }}
+    <div class="grid sm:grid-cols-2 gap-6">
+      {{ $lines := split .Inner "\n" }}
+      {{ range $lines }}
+        {{ if and . (gt (len .) 0) }}
+          {{ $parts := split . "|" }}
+          {{ if gt (len $parts) 2 }}
+            {{ $name := trim (index $parts 0) " " }}
+            {{ $role := trim (index $parts 1) " " }}
+            {{ $bio := trim (index $parts 2) " " }}
+            <div class="flex items-start gap-4">
+              <div class="w-16 h-16 rounded-full bg-cream-300 flex items-center justify-center flex-shrink-0">
+                <span class="font-display text-xl text-ink-500">{{ substr $name 0 1 }}</span>
+              </div>
+              <div>
+                <h3 class="font-display text-base {{ if eq $bg "ink" }}text-cream-100{{ else }}text-ink-600{{ end }}">{{ $name }}</h3>
+                <p class="text-sm {{ if eq $bg "ink" }}text-cream-400{{ else }}text-grove-600{{ end }}">{{ $role }}</p>
+                <p class="text-sm {{ if eq $bg "ink" }}text-cream-300{{ else }}text-ink-400{{ end }} mt-1">{{ $bio }}</p>
+              </div>
+            </div>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</section>

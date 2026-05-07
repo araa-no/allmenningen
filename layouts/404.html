@@ -1,0 +1,60 @@
+{{ define "main" }}
+<div class="min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto text-center">
+    <!-- Error code -->
+    <div class="mb-6">
+      <span class="font-display text-[8rem] sm:text-[10rem] leading-none text-rust-400/20">404</span>
+    </div>
+    
+    <!-- Message -->
+    <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl text-ink-600 leading-tight mb-4">
+      Siden ble ikke funnet
+    </h1>
+    <p class="font-body text-ink-400 text-lg leading-relaxed mb-8">
+      Beklager, men siden du leter etter finnes ikke eller har blitt flyttet. 
+      Kanskje en av lenkene under kan hjelpe deg på vei videre.
+    </p>
+    
+    <!-- Navigation buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+      <a href="/" class="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-rust-400 text-cream-50 font-medium text-sm tracking-wide hover:bg-rust-500 transition-all duration-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        Tilbake til forsiden
+      </a>
+      <a href="/kontakt" class="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-cream-200 text-ink-600 font-medium text-sm tracking-wide border-[1.5px] border-cream-400 hover:bg-cream-300 hover:border-cream-500 transition-all duration-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        Kontakt oss
+      </a>
+    </div>
+    
+    <!-- Quick links -->
+    <div class="border-t border-cream-400 pt-8">
+      <h2 class="font-display text-sm uppercase tracking-widest text-ink-500 mb-6">Populære seksjoner</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <a href="#" class="nav-link text-sm font-medium text-ink-400 hover:text-rust-400 transition-colors duration-150 py-2">
+          Politikk
+        </a>
+        <a href="#" class="nav-link text-sm font-medium text-ink-400 hover:text-rust-400 transition-colors duration-150 py-2">
+          Økonomi
+        </a>
+        <a href="#" class="nav-link text-sm font-medium text-ink-400 hover:text-rust-400 transition-colors duration-150 py-2">
+          Kultur
+        </a>
+        <a href="#" class="nav-link text-sm font-medium text-ink-400 hover:text-rust-400 transition-colors duration-150 py-2">
+          Lokal
+        </a>
+        <a href="/om" class="nav-link text-sm font-medium text-ink-400 hover:text-rust-400 transition-colors duration-150 py-2">
+          Om oss
+        </a>
+        <a href="/statutter" class="nav-link text-sm font-medium text-ink-400 hover:text-rust-400 transition-colors duration-150 py-2">
+          Statutter
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

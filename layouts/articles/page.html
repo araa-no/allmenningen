@@ -1,0 +1,220 @@
+{{ define "main" }}
+<!-- Breadcrumb -->
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+  <nav aria-label="breadcrumb" class="flex items-center gap-2 text-xs text-ink-300">
+    {{ range .Ancestors.Reverse }}
+    <a href="{{ .RelPermalink }}" class="hover:text-rust-400 transition-colors">{{ .LinkTitle }}</a>
+    <span>»</span>
+    {{ end }}
+    <a aria-current="page" href="{{ .RelPermalink }}" class="text-ink-400">{{ .LinkTitle }}</a>
+  </nav>
+</div>
+
+<!-- Article header -->
+<article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+  <!-- Category tag -->
+  {{ with .GetTerms "category" }}
+    {{ range .}}
+    <a href="{{ .RelPermalink }}" class="text-xs font-semibold uppercase tracking-widest text-grove-500 mb-4 block">{{ .Title }}</a>
+    {{ end }}
+  {{ end }}
+
+  <!-- Title -->
+  <h1 class="font-display text-4xl sm:text-5xl leading-tight mb-4 text-ink-600">{{ .Title }}</h1>
+
+  <!-- Ingress -->
+  <p class="font-medium text-xl sm:text-1xl text-ink-400 mb-4">{{ .Summary | plainify | truncate 250 }}</p>
+
+  <!-- Hero image -->
+  <figure class="mb-4 -mx-4 sm:-mx-6 lg:-mx-8">
+    <div class="overflow-hidden">
+      {{ with .Params.image }}
+      <img src="{{ .source }}"
+        alt="{{ .description }}"
+        class="w-full h-64 sm:h-80 lg:h-[420px] object-cover">
+      {{ else }}
+      <div class="bg-gradient-to-br from-cream-200 to-cream-300">
+        <div class="w-full h-64 sm:h-80 lg:h-[420px] object-cover flex items-center justify-center">
+          <span class="text-ink-300 text-4xl font-display">{{ substr $.Title 0 1 }}</span>
+        </div>
+      </div>
+      {{end}}
+    </div>
+    {{ with .Params.image }}
+    <figcaption class="px-4 sm:px-6 lg:px-8 pt-3">
+      <p class="text-sm text-ink-400 leading-relaxed">{{ .description }}</p>
+      <p class="text-xs text-ink-300 mt-1">Foto: {{ .credit }}</p>
+    </figcaption>
+    {{end}}
+  </figure>
+
+  <!-- Meta bar: authors, dates, share -->
+  <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-5 mb-6 pb-4 border-b border-cream-400">
+    <!-- Authors -->
+    <div class="flex flex-wrap gap-4">
+      {{ range .GetTerms "authors" }}
+        <div class="flex items-center gap-3">
+          {{ with .Params.image }}
+            <img src="{{ . }}"
+              class="w-10 h-10 rounded-full object-cover border-2 border-cream-400">
+          {{ else }}
+            <div class="w-10 h-10 rounded-full bg-cream-300 border-2 border-cream-400 flex items-center justify-center">
+              <span class="text-ink-400 text-sm font-medium">{{ substr .Title 0 1 }}</span>
+            </div>
+          {{ end }}
+          <div>
+            <a href="{{ .RelPermalink }}" class="text-sm font-medium text-ink-600 hover:text-rust-400 transition-colors">{{ .Title }}</a>
+            {{ with .Params.role }}
+              <p class="text-xs text-ink-300">{{ . }}</p>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+    <!-- Dates + Share -->
+    <div class="flex flex-col items-start sm:items-end gap-3 sm:min-w-[180px]">
+      <div class="text-xs text-ink-300 space-y-0.5 text-right">
+        <p>Publisert <span class="text-ink-400">{{ .Date | time.Format ":date_medium" }} {{ .Date | time.Format ":time_short" }}</span></p>
+        {{if not (eq .Lastmod .Date) }}
+          <p>Sist endra <span class="text-ink-400">{{ .Lastmod | time.Format ":date_medium" }} {{ .Lastmod | time.Format ":time_short" }}</span></p>
+        {{ end }}
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span class="text-xs text-ink-300 mr-1">Share</span>
+        <a href="#"
+          class="share-btn w-8 h-8 rounded flex items-center justify-center text-ink-400 transition-colors duration-150"
+          title="Share on X"
+          aria-label="Share on X">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </a>
+        <a href="#"
+          class="share-btn w-8 h-8 rounded flex items-center justify-center text-ink-400 transition-colors duration-150"
+          title="Share on Facebook"
+          aria-label="Share on Facebook">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+        <a href="#"
+          class="share-btn w-8 h-8 rounded flex items-center justify-center text-ink-400 transition-colors duration-150"
+          title="Share via Email"
+          aria-label="Share via Email">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </a>
+        <button
+          class="share-btn w-8 h-8 rounded flex items-center justify-center text-ink-400 transition-colors duration-150"
+          title="Copy link"
+          aria-label="Copy link"
+          onclick="navigator.clipboard.writeText(window.location.href); this.querySelector('span').textContent='Copied'; setTimeout(()=>this.querySelector('span').textContent='', 1500)">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          </svg>
+          <span class="sr-only"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="article-body text-ink-500 text-base sm:text-[17px] leading-relaxed">
+    {{ .Content }}
+  </div>
+
+  <!-- Tags -->
+  {{ with .GetTerms "topics" }}
+  <div class="flex flex-wrap gap-2 mt-10 pt-8 border-t border-cream-400">
+    <span class="text-xs text-ink-300 mr-1 self-center">Emne:</span>
+    {{ range . }}
+    <a href="{{ .RelPermalink  }}"
+      class="px-3 py-1 text-xs font-medium rounded-full border border-cream-400 text-ink-400 hover:border-grove-300 hover:text-grove-600 transition-colors">
+      {{ .LinkTitle }}</a>
+    {{end}}
+  </div>
+  {{end}}
+</article>
+
+<!-- Related articles with weighted scoring -->
+{{ $currentPage := . }}
+{{ $currentCategories := .GetTerms "category" }}
+{{ $currentTopics := .GetTerms "topics" }}
+
+{{/* Score all articles in the same section */}}
+{{ $scoredPages := slice }}
+{{ range where .Site.RegularPages "Section" "articles" }}
+  {{ if ne .RelPermalink $currentPage.RelPermalink }}
+    {{ $score := 0 }}
+
+    {{/* +3 points for matching category */}}
+    {{ range $currentCategories }}
+      {{ range $.GetTerms "category" }}
+        {{ if eq .RelPermalink $.RelPermalink }}
+          {{ $score = add $score 3 }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{/* +1 point for each shared topic */}}
+    {{ range $currentTopics }}
+      {{ range $.GetTerms "topics" }}
+        {{ if eq .RelPermalink $.RelPermalink }}
+          {{ $score = add $score 1 }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{/* Only include if there's some relevance */}}
+    {{ if gt $score 0 }}
+      {{ $scoredPages = $scoredPages | append (dict "page" . "score" $score) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Sort by score (desc), then by date (desc) */}}
+{{ $relatedPages := sort $scoredPages "score" "desc" }}
+
+{{ with first 3 $relatedPages }}
+<section class="bg-cream-200/60 border-t border-cream-400">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="font-display text-2xl mb-6 pb-3 border-b border-cream-400">Relaterte artikler</h2>
+    <div class="grid sm:grid-cols-3 gap-6">
+      {{ range . }}
+        {{ $related := .page }}
+        <a href="{{ $related.RelPermalink }}" class="related-card group">
+          <div class="overflow-hidden aspect-[4/3] rounded-lg mb-3">
+            {{ with $related.Params.image }}
+              <img src="{{ .source }}" alt="{{ .description }}"
+                class="w-full h-full object-cover transition-transform duration-500">
+            {{ else }}
+              <div class="w-full h-full bg-gradient-to-br from-cream-200 to-cream-300 flex items-center justify-center">
+                <span class="text-ink-300 text-3xl font-display">{{ substr $related.Title 0 1 }}</span>
+              </div>
+            {{ end }}
+          </div>
+          {{ with $related.GetTerms "category" }}
+            {{ range first 1 . }}
+              <span class="text-xs font-semibold uppercase tracking-widest text-grove-500 mb-1 block">{{ .Title }}</span>
+            {{ end }}
+          {{ end }}
+          <h3 class="related-title font-display text-base leading-snug mb-1.5 transition-colors duration-150">{{ $related.Title }}</h3>
+          <p class="text-ink-300 text-sm leading-relaxed line-clamp-2 mb-1.5">{{ $related.Summary | plainify | truncate 120 }}</p>
+          {{ with $related.GetTerms "authors" }}
+            {{ range first 1 . }}
+              <span class="text-ink-200 text-xs">{{ .Title }}</span>
+            {{ end }}
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}

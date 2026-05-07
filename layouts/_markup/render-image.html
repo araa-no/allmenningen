@@ -1,0 +1,20 @@
+{{- if .IsBlock -}}
+  <figure class="my-8 -mx-4 sm:-mx-6 lg:-mx-8">
+    <div class="rounded-lg overflow-hidden">
+      <img src="{{ .Destination | safeURL }}"
+        class="w-full h-52 sm:h-64 object-cover"
+        {{- with .PlainText }} alt="{{ . }}"{{ end -}}
+      >
+    </div>
+    <figcaption class="px-4 sm:px-6 lg:px-8 pt-3">
+      <p class="text-sm text-ink-400 leading-relaxed">{{- with .Title }} {{ . }} {{ end -}}</p>
+      <!-- todo add support for this -->
+      <p class="text-xs text-ink-300 mt-1">Photo: Ana Sotelo / Commons Photo Collective</p>
+    </figcaption>
+  </figure>
+{{- else -}}
+  <img class="my-8 -mx-4 sm:-mx-6 lg:-mx-8" src="{{ .Destination | safeURL }}"
+    {{- with .PlainText }} alt="{{ . }}"{{ end -}}
+    {{- with .Title }} title="{{ . }}"{{ end -}}
+  >
+{{- end -}}

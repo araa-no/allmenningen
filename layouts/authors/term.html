@@ -1,0 +1,116 @@
+{{ define "main" }}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="lg:grid lg:grid-cols-[280px_1fr] lg:gap-10">
+
+    <!-- Author Sidebar -->
+    <aside class="mb-8 lg:mb-0">
+      <div class="bg-white rounded-lg shadow-sm border border-cream-300 p-6 sticky top-8">
+        <!-- Author Image -->
+        <div class="mb-5">
+          {{ with .Params.image }}
+            <img src="{{ . }}" alt="{{ $.Title }}"
+              class="w-32 h-32 rounded-full object-cover border-4 border-cream-200 mx-auto">
+          {{ else }}
+            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-cream-200 to-cream-300 border-4 border-cream-200 mx-auto flex items-center justify-center">
+              <span class="text-ink-400 text-4xl font-display">{{ substr .Title 0 1 }}</span>
+            </div>
+          {{ end }}
+        </div>
+
+        <!-- Author Name & Role -->
+        <div class="text-center mb-5">
+          <h1 class="font-display text-2xl text-ink-600 mb-1">{{ .Title }}</h1>
+          {{ with .Params.role }}
+            <p class="text-sm text-grove-500 font-medium">{{ . }}</p>
+          {{ end }}
+        </div>
+
+        <!-- Author Bio -->
+        {{ with .Content }}
+          <div class="prose prose-sm text-ink-400 mb-5 pb-5 border-b border-cream-300">
+            {{ . }}
+          </div>
+        {{ end }}
+        <!-- Contact Info -->
+        {{ if or .Params.email .Params.twitter .Params.website .Params.linkedin .Params.facebook }}
+          <div class="mt-4 mb-5 pb-5 border-b border-cream-300">
+            <h3 class="text-center text-xs uppercase tracking-wider text-ink-300 mb-2">Kontakt</h3>
+            <div class="flex flex-col items-center gap-2 text-sm text-ink-400">
+              {{ with .Params.email }}
+                <a href="mailto:{{ . }}" class="text-ink-400 hover:text-rust-400">{{ . }}</a>
+              {{ end }}
+              {{ with .Params.twitter }}
+                <a href="https://twitter.com/{{ replace . "@" "" }}" target="_blank" rel="noopener noreferrer" class="text-ink-400 hover:text-rust-400">{{ . }}</a>
+              {{ end }}
+              {{ with .Params.website }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="text-ink-400 hover:text-rust-400">{{ . }}</a>
+              {{ end }}
+              {{ with .Params.linkedin }}
+                <a href="https://linkedin.com/in/{{ . }}" target="_blank" rel="noopener noreferrer" class="text-ink-400 hover:text-rust-400">LinkedIn</a>
+              {{ end }}
+              {{ with .Params.facebook }}
+                <a href="https://facebook.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="text-ink-400 hover:text-rust-400">Facebook</a>
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+
+        <!-- Stats -->
+        <div class="text-center">
+          <p class="text-xs text-ink-300 uppercase tracking-wider mb-1">Artikler</p>
+          <p class="text-2xl font-display text-ink-600">{{ len .Pages }}</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Articles Grid -->
+    <section>
+      <h2 class="font-display text-xl text-ink-600 mb-6 pb-3 border-b border-cream-400">
+        Artikler av {{ .Title }}
+      </h2>
+
+      {{ if .Pages }}
+        <div class="grid md:grid-cols-2 gap-6">
+          {{ range .Pages.ByDate.Reverse }}
+            <a href="{{ .RelPermalink }}" class="article-card group block bg-white overflow-hidden shadow-sm rounded-lg border border-cream-200 hover:shadow-md transition-shadow">
+              {{ with .Params.image }}
+                <div class="overflow-hidden aspect-[4/3]">
+                  <img src="{{ .source }}" alt="{{ .description }}" loading="lazy"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+              {{ else }}
+                <div class="overflow-hidden aspect-[4/3] bg-gradient-to-br from-cream-200 to-cream-300">
+                  <div class="w-full h-full flex items-center justify-center">
+                    <span class="text-ink-300 text-4xl font-display">{{ substr .Title 0 1 }}</span>
+                  </div>
+                </div>
+              {{ end }}
+
+              <div class="p-5">
+                {{ with .Params.category }}
+                  <div class="flex flex-wrap gap-2 mb-2">
+                      <span class="text-xs font-semibold uppercase tracking-widest text-grove-500">{{ . }}</span>
+                  </div>
+                {{ end }}
+
+                <h3 class="article-title font-display text-lg leading-snug mb-2 transition-colors duration-150 group-hover:text-rust-400">{{ .LinkTitle }}</h3>
+
+                {{ with .Summary }}
+                  <p class="text-ink-300 text-sm leading-relaxed line-clamp-2 mb-3">{{ . | plainify | truncate 120 }}</p>
+                {{ end }}
+
+                <div class="flex items-center gap-2 text-ink-200 text-xs">
+                  <span>{{ .Date | time.Format ":date_medium" }}</span>
+                </div>
+              </div>
+            </a>
+          {{ end }}
+        </div>
+      {{ else }}
+        <p class="text-ink-400 text-center py-12">Ingen artikler ennå.</p>
+      {{ end }}
+    </section>
+
+  </div>
+</div>
+{{ end }}

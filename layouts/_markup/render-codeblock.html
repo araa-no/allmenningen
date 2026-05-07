@@ -1,0 +1,49 @@
+<div class="my-8 bg-ink-600 rounded-lg overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8">
+  <div class="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-cream-500/10">
+    <span class="text-xs text-cream-400 font-mono">example.js</span>
+    <button class="text-xs text-cream-500 hover:text-cream-300 transition-colors" onclick="navigator.clipboard.writeText(this.closest('.my-8').querySelector('code').textContent); this.textContent='Copied'; setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+  </div>
+  <pre class="px-4 sm:px-6 py-4 overflow-x-auto"><code class="text-sm font-mono leading-relaxed">{{ $result := transform.HighlightCodeBlock . }}{{ $result.Wrapped }}</code></pre>
+</div>
+
+<!--
+<div class="my-8 bg-ink-600 rounded-lg overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8">
+  <div class="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-cream-500/10">
+    <span class="text-xs text-cream-400 font-mono">participatory_budget.rb</span>
+    <button class="text-xs text-cream-500 hover:text-cream-300 transition-colors"
+      onclick="navigator.clipboard.writeText(this.closest('.my-8').querySelector('code').textContent); this.textContent='Copied'; setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+  </div>
+  <pre class="px-4 sm:px-6 py-4 overflow-x-auto"><code class="text-sm font-mono leading-relaxed text-cream-300"><span class="text-grove-300">class</span> <span class="text-cream-100">ParticipatoryBudget</span>
+  <span class="text-grove-300">attr_reader</span> :neighborhood, :funds, :proposals
+
+  <span class="text-grove-300">def</span> <span class="text-cream-100">initialize</span>(neighborhood, funds_cents)
+    <span class="text-ink-200">@neighborhood</span> = neighborhood
+    <span class="text-ink-200">@funds</span>       = funds_cents
+    <span class="text-ink-200">@proposals</span>    = []
+  <span class="text-grove-300">end</span>
+
+  <span class="text-grove-300">def</span> <span class="text-cream-100">submit_proposal</span>(title, cost:, author:)
+    <span class="text-rust-300">raise</span> <span class="text-cream-400">"Only residents can submit"</span> <span class="text-grove-300">unless</span>
+      neighborhood.resident?(author)
+
+    proposals &lt;&lt; {
+      title:, cost:, author:,
+      votes: <span class="text-cream-400">0</span>, status: <span class="text-cream-400">:open</span>
+    }
+  <span class="text-grove-300">end</span>
+
+  <span class="text-grove-300">def</span> <span class="text-cream-100">allocate!</span>
+    funded = proposals
+      .select { |p| p[:status] == <span class="text-cream-400">:open</span> }
+      .sort_by { |p| -p[:votes] }
+
+    budget = funds
+    funded.each <span class="text-grove-300">do</span> |p|
+      <span class="text-grove-300">break</span> <span class="text-grove-300">if</span> budget < <span class="text-cream-400">0</span>
+      p[:status] = budget >= p[:cost] ? <span class="text-cream-400">:funded</span> : <span class="text-cream-400">:deferred</span>
+      budget -= p[:cost] <span class="text-grove-300">if</span> p[:status] == <span class="text-cream-400">:funded</span>
+    <span class="text-grove-300">end</span>
+    funded
+  <span class="text-grove-300">end</span>
+  <span class="text-grove-300">end</span></code></pre>
+</div> -->

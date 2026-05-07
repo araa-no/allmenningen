@@ -1,0 +1,163 @@
+{{- /* SEO Meta Tags for Hugo */ -}}
+{{- $page := . -}}
+{{- $site := site -}}
+
+{{- /* Title */ -}}
+{{- if .IsHome -}}
+<title>{{ $site.Title }}</title>
+{{- else -}}
+<title>{{ .Title }} | {{ $site.Title }}</title>
+{{- end -}}
+
+{{- /* Description */ -}}
+{{- $description := "" -}}
+{{- if .Params.summary -}}
+{{- $description = .Params.summary -}}
+{{- else if .Params.description -}}
+{{- $description = .Params.description -}}
+{{- else if .Summary -}}
+{{- $description = (.Summary | plainify | truncate 160) -}}
+{{- else -}}
+{{- $description = $site.Params.description | default $site.Title -}}
+{{- end -}}
+<meta name="description" content="{{ $description }}" />
+
+{{- /* Keywords */ -}}
+{{- with .Params.topics -}}
+<meta name="keywords" content="{{ delimit . ", " }}" />
+{{- end -}}
+
+{{- /* Author */ -}}
+{{ with .GetTerms "authors" }}
+  {{ range . }}
+  <meta name="author" content="{{ .Title }}" />
+  {{- end -}}
+{{- end -}}
+
+{{- /* Canonical URL */ -}}
+<link rel="canonical" href="{{ .Permalink }}" />
+
+{{- /* Robots */ -}}
+{{- if .Params.noindex -}}
+<meta name="robots" content="noindex, nofollow" />
+{{- else -}}
+<meta name="robots" content="index, follow" />
+{{- end -}}
+
+{{- /* Open Graph */ -}}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:title" content="{{ .Title }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta property="og:site_name" content="{{ $site.Title }}" />
+<meta property="og:locale" content="{{ $site.Language.Locale }}" />
+
+{{- /* Open Graph Image */ -}}
+{{ $ogImage := "" }}
+{{ if reflect.IsMap .Params.image  }}
+{{ $ogImage = .Params.image.source }}
+{{ else if .Params.image}}
+{{ $ogImage = .Params.image }}
+{{ else if $site.Params.default_og_image }}
+{{ $ogImage = $site.Params.default_og_image }}
+{{ end }}
+
+{{ with $ogImage }}
+<meta property="og:image" content="{{ . | absURL }}" />
+{{ end }}
+
+{{- /* Article specific Open Graph */ -}}
+{{- if .IsPage -}}
+  {{- with .Date -}}
+  <meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />
+  {{- end -}}
+
+  {{- with .Lastmod -}}
+  <meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />
+  {{- end -}}
+
+  {{ with .GetTerms "authors" }}
+    {{- range . -}}
+    <meta property="article:author" content="{{ .Title }}" />
+    {{- end -}}
+  {{- end -}}
+
+  {{- with .GetTerms "category" -}}
+    {{- range . -}}
+    <meta property="article:section" content="{{ .Title }}" />
+    {{- end -}}
+  {{- end -}}
+
+  {{- with .GetTerms "topics" -}}
+    {{- range . -}}
+    <meta property="article:tag" content="{{ .Title }}" />
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Twitter Card */ -}}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ .Title }}" />
+<meta name="twitter:description" content="{{ $description }}" />
+
+{{- with $ogImage -}}
+<meta name="twitter:image" content="{{ . | absURL }}" />
+{{- end -}}
+
+{{- with $site.Params.twitter -}}
+<meta name="twitter:site" content="@{{ . }}" />
+{{- end -}}
+
+{{- /* JSON-LD Structured Data */ -}}
+{{- if .IsPage -}}
+  {{- $authorName := "Allmenningen" -}}
+  {{- with .Params.authors -}}
+    {{- $authorPage := index $site.Data.authors (index . 0) -}}
+    {{- with $authorPage -}}
+      {{- $authorName = .name -}}
+    {{- end -}}
+  {{- end -}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ .Permalink }}"
+    },
+    "headline": "{{ .Title }}",
+    "description": "{{ $description }}",
+    {{- with $ogImage }}
+    "image": "{{ . | absURL }}",
+    {{- end }}
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ $authorName }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ $site.Title }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ $site.BaseURL }}logo.png"
+      }
+    }
+  }
+  </script>
+  {{- else if .IsHome -}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ $site.Title }}",
+    "url": "{{ $site.BaseURL }}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ $site.BaseURL }}search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+{{- end -}}

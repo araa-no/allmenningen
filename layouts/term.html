@@ -1,0 +1,51 @@
+{{ define "main" }}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Articles Grid -->
+  <section>
+    <h2 class="font-display text-xl text-ink-600 mb-6 pb-3 border-b border-cream-400">
+      Artikler om {{ lower .Title }}
+    </h2>
+
+    {{ if .Pages }}
+      <div class="grid md:grid-cols-2 gap-6">
+        {{ range .Pages.ByDate.Reverse }}
+          <a href="{{ .RelPermalink }}" class="article-card group block bg-white overflow-hidden shadow-sm rounded-lg border border-cream-200 hover:shadow-md transition-shadow">
+            {{ with .Params.image }}
+              <div class="overflow-hidden aspect-[4/3]">
+                <img src="{{ .source }}" alt="{{ .description }}" loading="lazy"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              </div>
+            {{ else }}
+              <div class="overflow-hidden aspect-[4/3] bg-gradient-to-br from-cream-200 to-cream-300">
+                <div class="w-full h-full flex items-center justify-center">
+                  <span class="text-ink-300 text-4xl font-display">{{ substr .Title 0 1 }}</span>
+                </div>
+              </div>
+            {{ end }}
+
+            <div class="p-5">
+              {{ with .Params.category }}
+                <div class="flex flex-wrap gap-2 mb-2">
+                  <span class="text-xs font-semibold uppercase tracking-widest text-grove-500">{{ . }}</span>
+                </div>
+              {{ end }}
+
+              <h3 class="article-title font-display text-lg leading-snug mb-2 transition-colors duration-150 group-hover:text-rust-400">{{ .LinkTitle }}</h3>
+
+              {{ with .Summary }}
+                <p class="text-ink-300 text-sm leading-relaxed line-clamp-2 mb-3">{{ . | plainify | truncate 120 }}</p>
+              {{ end }}
+
+              <div class="flex items-center gap-2 text-ink-200 text-xs">
+                <span>{{ .Date | time.Format ":date_medium" }}</span>
+              </div>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="text-ink-400 text-center py-12">Ingen artikler ennå.</p>
+    {{ end }}
+  </section>
+</div>
+{{ end }}

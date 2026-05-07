@@ -1,0 +1,72 @@
+<footer class="bg-ink-600 text-cream-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+
+      <!-- Col 1: Brand -->
+      <div class="sm:col-span-2 lg:col-span-1">
+        <a href="/" class="font-display text-2xl text-cream-50 block mb-3">{{ site.Title }}</a>
+        <p class="text-cream-400 text-sm leading-relaxed mb-4">Uavhengig journalistikk som offentlig gode. Et prosjekt av samskipnaden araa.</p>
+        <div class="flex items-center gap-3">
+          <a href="https://facebook.com/{{ .Site.Params.facebook }}" aria-label="Facebook"><i class="text-cream-500 hover:text-rust-300 transition-colors fa-brands fa-facebook"></i></a>
+          <a href="https://x.com/{{ .Site.Params.twitter }}" aria-label="X"><i class="text-cream-500 hover:text-rust-300 transition-colors fa-brands fa-x-twitter"></i></a>
+          <a href="{{ .Site.Params.mastodon }}" aria-label="Mastodon"><i class="text-cream-500 hover:text-rust-300 transition-colors fa-brands fa-mastodon"></i></a>
+          <a href="{{ .Site.Params.linkedin }}" aria-label="LinkedIn"><i class="text-cream-500 hover:text-rust-300 transition-colors fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+
+      <!-- Col 2: Sections -->
+      <div>
+        <h4 class="font-display text-cream-100 text-sm uppercase tracking-widest mb-4">Avdelinger</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Politics</a></li>
+          <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Economy</a></li>
+          <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Ecology</a></li>
+          <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Culture & Reviews</a></li>
+          <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Labor</a></li>
+          <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">International</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: About -->
+      <div>
+        <h4 class="font-display text-cream-100 text-sm uppercase tracking-widest mb-4">Om oss</h4>
+        <ul class="space-y-2">
+          <li><a href="/om" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Om Allmenningen</a></li>
+          <li><a href="/statutter" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Statutter</a></li>
+          <li><a href="/redaksjonell-linje" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Redaksjonell linje</a></li>
+          <li><a href="/kontakt" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Kontakt</a></li>
+          <li><a href="" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Grafisk profil</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Kontakt -->
+      <div>
+        <h4 class="font-display text-cream-100 text-sm uppercase tracking-widest mb-4">Kontakt</h4>
+        <ul class="space-y-2">
+          <li><a href="mailto:post@allmenningen.no" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">post@allmenningen.no</a></li>
+          <li><a href="{{ (site.GetPage "taxonomyTerm" "authors").RelPermalink }}" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Skribenter</a></li>
+          <li><a href="/kontakt" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Mer kontaktinformasjon</a></li>
+        </ul>
+        <div class="mt-5 pt-4 border-t border-cream-500/20">
+          <h4 class="font-display text-cream-100 text-sm uppercase tracking-widest mb-2">Støtt oss</h4>
+          <ul class="space-y-2">
+            <li><a href="#subscribe" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Abonner</a></li>
+            <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Doner</a></li>
+            <li><a href="#" class="text-cream-400 hover:text-cream-100 text-sm transition-colors">Bli medlem</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-10 pt-6 border-t border-cream-500/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-cream-500 text-xs">{{ site.Copyright }} </p>
+      <div class="flex items-center gap-4">
+        <a href="/personvern" class="text-cream-500 hover:text-cream-300 text-xs transition-colors">Personvern</a>
+        <a href="/redaksjonell-linje" class="text-cream-500 hover:text-cream-300 text-xs transition-colors">Redaksjonell linje</a>
+        <a href="/statutter" class="text-cream-500 hover:text-cream-300 text-xs transition-colors">Statutter</a>
+      </div>
+    </div>
+  </div>
+</footer>

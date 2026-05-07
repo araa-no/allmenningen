@@ -1,0 +1,41 @@
+<div class="my-8 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+  <table class="w-full text-sm text-left border-collapse"
+    {{- range $k, $v := .Attributes }}
+      {{- if $v }}
+        {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+      {{- end }}
+    {{- end }}>
+    <thead>
+      {{- range .THead }}
+        <tr class="border-b-2 border-cream-400">
+          {{- range . }}
+            <th class="py-2.5 font-semibold text-ink-500 text-xs uppercase tracking-wider"
+              {{- with .Alignment }}
+                {{- printf " style=%q" (printf "text-align: %s" .) | safeHTMLAttr }}
+              {{- end -}}
+            >
+              {{- .Text -}}
+            </th>
+          {{- end }}
+        </tr>
+      {{- end }}
+    </thead>
+    <tbody class="text-ink-400">
+      {{- range .TBody }}
+        <!-- todo add when bold: font-medium text-ink-500 -->
+        <tr class="border-b border-cream-300 ">
+          {{- range . }}
+            <td
+              {{- with .Alignment }}
+                {{- printf " style=%q" (printf "text-align: %s" .) | safeHTMLAttr }}
+              {{- end -}}
+            >
+              {{- .Text -}}
+            </td>
+          {{- end }}
+        </tr>
+      {{- end }}
+    </tbody>
+  </table>
+  <p class="text-xs text-ink-300 mt-2 italic">Sources: ICA, ILO, respective organizations. Figures are approximate and reflect most recent available data.</p>
+</div>
