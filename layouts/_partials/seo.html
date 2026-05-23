@@ -112,7 +112,7 @@
 {{- if .IsPage -}}
   {{- $authorName := "Allmenningen" -}}
   {{- with .Params.authors -}}
-    {{- $authorPage := index $site.Data.authors (index . 0) -}}
+    {{- $authorPage := index hugo.Data.authors (index . 0) -}}
     {{- with $authorPage -}}
       {{- $authorName = .name -}}
     {{- end -}}
@@ -146,7 +146,7 @@
     }
   }
   </script>
-  {{- else if .IsHome -}}
+{{- else if .IsHome -}}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

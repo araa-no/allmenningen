@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 {{ partial "seo.html" . }}
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
-{{ $css := resources.Get "css/output.css" | minify }}
+{{ $css := resources.Get "css/output.css" }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
 {{ $js := resources.Get "js/main.js" | js.Build }}
 <script src="{{ $js.RelPermalink }}" defer></script>
